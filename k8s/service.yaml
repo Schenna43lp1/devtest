@@ -7,6 +7,6 @@ spec:
     app: devtest
   ports:
     - port: 80
-      targetPort: 5678
+      targetPort: 80
       protocol: TCP
   type: NodePort

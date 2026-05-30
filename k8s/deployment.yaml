@@ -14,12 +14,10 @@ spec:
     spec:
       containers:
       - name: devtest
-        image: hashicorp/http-echo:1.0.0
-        imagePullPolicy: IfNotPresent
-        args:
-          - "-text=devtest running in k3s"
+        image: ghcr.io/schenna43lp1/devtest:latest
+        imagePullPolicy: Always
         ports:
-        - containerPort: 5678
+        - containerPort: 80
         resources:
           requests:
             cpu: "50m"
@@ -28,12 +26,14 @@ spec:
             cpu: "250m"
             memory: "128Mi"
         livenessProbe:
-          tcpSocket:
-            port: 5678
+          httpGet:
+            path: /
+            port: 80
           initialDelaySeconds: 10
           periodSeconds: 10
         readinessProbe:
-          tcpSocket:
-            port: 5678
+          httpGet:
+            path: /
+            port: 80
           initialDelaySeconds: 5
           periodSeconds: 5

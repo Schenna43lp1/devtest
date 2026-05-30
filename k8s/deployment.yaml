@@ -14,6 +14,26 @@ spec:
     spec:
       containers:
       - name: devtest
-        image: nginx:latest
+        image: hashicorp/http-echo:1.0.0
+        imagePullPolicy: IfNotPresent
+        args:
+          - "-text=devtest running in k3s"
         ports:
-        - containerPort: 80
+        - containerPort: 5678
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+          limits:
+            cpu: "250m"
+            memory: "128Mi"
+        livenessProbe:
+          tcpSocket:
+            port: 5678
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          tcpSocket:
+            port: 5678
+          initialDelaySeconds: 5
+          periodSeconds: 5
